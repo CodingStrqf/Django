@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 
 <head>
@@ -17,36 +18,38 @@
             <a href="/index">Connexion</a>
             <br />
             <form method="post" action="inscription" class="center">
+                {% csrf_token %}
                 <table>
                     <tr>
-                        <td><label for="nom">Nom: </label></td>
-                        <td><input type="text" id="nom" name="nom" />
+                        <td><label for="{{ form.nom.id_for_label }}">{{ form.nom.label }}: </label>
+                            {{ form.nom}}
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="prenom">Prénom: </label></td>
-                        <td><input type="text" id="prenom" name="prenom" />
+                        <td><label for="{{ form.prenom.id_for_label }}">{{ form.prenom.label }}: </label>
+                            {{ form.prenom}}
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="email">Email: </label></td>
-                        <td><input type="email" id="email" name="email" />
+                        <td><label for="{{ form.email.id_for_label }}">{{ form.email.label }}: </label>
+                            {{ form.email}}
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="pwd">Mot de passe: </label></td>
-                        <td><input type="password" id="password" name="password" />
+                        <td><label for="{{ form.mot_de_passe.id_for_label }}">{{ form.mot_de_passe.label }}: </label>
+                            {{ form.mot_de_passe}}
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
                             <select name="ville">
-                                <option value="1">L ABERGEMENT CLEMENCIAT</option>
-                                <option value="2">L ABERGEMENT DE VAREY</option>
+                                <option value="1">ABERGEMENT CLEMENCIAT</option>
+                                <option value="2">ABERGEMENT DE VAREY</option>
                                 <option value="3">AMAREINS</option>
                                 <option value="4">AMBERIEU EN BUGEY</option>
                             </select>
+                            {{ form.ville}}
                         </td>
                     </tr>
                     <tr>
