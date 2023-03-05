@@ -2,60 +2,44 @@
 <html>
 
 <head>
-    <meta charset="UTH-8">
+    <meta charset="UTF-8">
     <title>EnglishTest</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <div class="textcenter">
+        <div class="text-center">
             <h1 class="pagetitle">English Test Inscription</h1>
             <br />
-            <a href="/index">Connexion</a>
-            <br />
-            <form method="post" action="inscription" class="center">
+            <form method="post" action="{% url 'inscription' %}" class="center">
                 {% csrf_token %}
-                <table>
-                    <tr>
-                        <td><label for="{{ form.nom.id_for_label }}">{{ form.nom.label }}: </label>
-                            {{ form.nom}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="{{ form.prenom.id_for_label }}">{{ form.prenom.label }}: </label>
-                            {{ form.prenom}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="{{ form.email.id_for_label }}">{{ form.email.label }}: </label>
-                            {{ form.email}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="{{ form.mot_de_passe.id_for_label }}">{{ form.mot_de_passe.label }}: </label>
-                            {{ form.mot_de_passe}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <select name="ville">
-                                <option value="1">ABERGEMENT CLEMENCIAT</option>
-                                <option value="2">ABERGEMENT DE VAREY</option>
-                                <option value="3">AMAREINS</option>
-                                <option value="4">AMBERIEU EN BUGEY</option>
-                            </select>
-                            {{ form.ville}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center"><input type="submit" value="Valider" /></td>
-                    </tr>
-                </table>
+                <div class="form-group">
+                    <label for="{{ form.nom.id_for_label }}">{{ form.nom.label }}:</label>
+                    {{ form.nom }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.prenom.id_for_label }}">{{ form.prenom.label }}:</label>
+                    {{ form.prenom }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.mot_de_passe.id_for_label }}">{{ form.mot_de_passe.label }}:</label>
+                    {{ form.mot_de_passe }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.ville.id_for_label }}">{{ form.ville.label }}:</label>
+                    {{ form.ville }}
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Valider" class="btn btn-primary" />
+                </div>
             </form>
         </div>
     </div>

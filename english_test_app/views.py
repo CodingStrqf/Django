@@ -9,28 +9,21 @@ def index(request):
     return render(request, "english_test_app/index.html")
 
 def inscription(request):
-
-    if (request.method == 'POST'):
-        print("POST")
+    if request.method == 'POST':
         form = InscriptionForm(request.POST)
-
         if form.is_valid():
-            nom = form['nom']
-            prenom = form['prenom']
-            email = form['email']
-            mot_de_passe = form['mot_de_passe']
-            ville = form['ville']
-        
-            joueur = Joueur(nom=nom, prenom=prenom, email=email, mot_de_passe=mot_de_passe, ville=ville)
-            joueur.save()
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
+            email = form.cleaned_data['email']
+            mot_de_passe = form.cleaned_data['mot_de_passe']
+            ville = form.cleaned_data['ville']
 
-            request.session['joueur_id'] = joueur.id
-            return redirect(index)
-        else:
-            print(form.errors)
+            joueur = Joueur(nom=nom, prenom=prenom, email=email, mot_de_passe=mot_de_passe, idVille=ville)
+            joueur.save()
+            return render(request, 'english_test_app/index.html', {'form': form})
+
     else:
         form = InscriptionForm()
+    return render(request, 'english_test_app/inscription.html', {'form': form})
 
-    return render(request, "english_test_app/inscription.html", {
-        'form':form
-    })
+
