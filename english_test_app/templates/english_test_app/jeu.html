@@ -13,23 +13,25 @@
     <div class="container">
         <div class="textcenter">
 
-            <h1 class="pagetitle">English Test Nicolas, meilleur score : 90 verbes</h1>
+            <h1 class="pagetitle">English Test {{ joueur.nom }}, meilleur score : {{ partie.score }} verbes</h1>
             <br />
             <a href="/deconnexion">Déconnexion</a>
             <br />
             <form method="post" action="jeu" class="center">
                 <table>
+                    {% for question in questions %}
                     <tr>
-                        <td colspan="3" style="text-align: center">Question 1 : Le verbe demeurer
+                        <td colspan="3" style="text-align: center">Question {{ forloop.counter }} : Le verbe {{ question.idVerbe.baseVerbal }}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            abide
+                            {{ question.idVerbe.preterit }}
                         </td>
                         <td><input name="preterit" type="text" /></td>
                         <td><input name="participe_passe" type="text" /></td>
                     </tr>
+                    {% endfor %}
                     <tr>
                         <td colspan="3" style="text-align: center">
                             <input type="submit" value="Envoyer" />

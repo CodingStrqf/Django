@@ -41,7 +41,27 @@ def login_view(request):
             joueur = None
         if joueur is not None and password == joueur.mot_de_passe:
             messages.success(request, "Vous êtes maintenant connecté !")
-            return HttpResponseRedirect('english_test_app/jeu.html')
+            return HttpResponseRedirect('jeu')
         else:
             messages.error(request, "Email ou mot de passe incorrect.")
     return render(request, 'english_test_app/index.html')
+
+
+def jeu(request):
+    print(request)
+    # Récupération du joueur connecté
+    joueur = Joueur.objects.get(email=request.user.email)
+
+    # Récupération de la dernière partie du joueur
+    partie = Partie.objects.filter(idJoueur=joueur).order_by('-id')[0]
+
+    # Récupération des questions de la partie
+    questions = Question.objects.filter(idPartie=partie)
+
+    # Passer les informations à la template
+    context = {
+        'joueur': joueur,
+        'partie': partie,
+        'questions': questions,
+    }
+    return render(request, 'jeu.html', context)
