@@ -53,15 +53,16 @@ def jeu(request):
     joueur = Joueur.objects.get(email=request.user.email)
 
     # Récupération de la dernière partie du joueur
-    partie = Partie.objects.filter(idJoueur=joueur).order_by('-id')[0]
-
-    # Récupération des questions de la partie
-    questions = Question.objects.filter(idPartie=partie)
+    if Partie.objects.filter(idJoueur=joueur).count() > 0:
+        AnciennePartie = Partie.objects.filter(idJoueur=joueur).order_by('-id')[0]
+        
+    partie = Partie(idJoueur=joueur)
+    partie.save()
 
     # Passer les informations à la template
     context = {
         'joueur': joueur,
         'partie': partie,
-        'questions': questions,
+        'anciennePartie': AnciennePartie,
     }
     return render(request, 'jeu.html', context)
