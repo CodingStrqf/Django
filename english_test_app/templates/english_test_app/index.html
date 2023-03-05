@@ -9,10 +9,11 @@
 </head>
 <body>
   <div class="container">
-    <div class="textcenter">
+    <div class="text-center">
       <h1>Bienvenue sur English Test !</h1>
       <br />
-      <form method="post" action="index" class="center">
+      <form method="post" action="{% url 'login' %}" class="center">
+        {% csrf_token %}
         <table>
           <tr>
             <td><label for="email">Email: </label></td>
@@ -22,16 +23,22 @@
             <td><label for="pwd">Mot de passe: </label></td>
             <td><input type="password" id="password" name="password" /></td>
           </tr>
+          {% if messages %}
           <tr>
-            <td colspan="2" style="color: red;">Erreurs</td>
+            <td colspan="2" style="color: red;">
+              {% for message in messages %}
+              {{ message }}
+              {% endfor %}
+            </td>
           </tr>
+          {% endif %}
           <tr>
             <td colspan="2" style="text-align: center;"><input type="submit" value="Connexion" /></td>
           </tr>
         </table>
       </form>
       <br />
-      <a href="/inscription">Inscription</a>
+      <a href="{% url 'inscription' %}">Inscription</a>
       <br />
       <br />
       <br />
