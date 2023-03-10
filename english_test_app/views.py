@@ -45,7 +45,9 @@ def login_view(request):
             joueur = None
         if joueur is not None and password == joueur.mot_de_passe:
             messages.success(request, "Vous êtes maintenant connecté !")
-            return HttpResponseRedirect('jeu')
+            
+            url = reverse('jeu') + f'?email={email}'
+            return redirect(url)
         else:
             messages.error(request, "Email ou mot de passe incorrect.")
     return render(request, 'english_test_app/index.html')
@@ -53,6 +55,9 @@ def login_view(request):
 
 def jeu(request):
     # Récupération du joueur connecté
+    #print("request ", email)
+    print(request.GET)
+    
     
     if request.method == 'POST':
         # Récupération de la réponse de l'utilisateur
@@ -98,14 +103,18 @@ def jeu(request):
             #return render(request, 'english_test_app/jeu.html',context=)
             question = None
             message = "Perdu"
-            context = { 'message': "GAGNE", 'question_index': question_index, 'verbe': verbe.baseVerbal }
+            context = { 'message': "GAGNE", 'question_index': question_index, 'verbe': verbe, 'number': request.session.get('question_index') }
             return render(request, 'english_test_app/fin.html', context=context)
 
     else : 
         message = "Bravo"
         question = Question.objects.order_by('?')[0]        
         verbe = Verbe.objects.get(baseVerbal=question.idVerbe)
-        joueur = Joueur.objects.get(email=request.user.email)
+        email = request.GET.get('email')
+        if email is None:
+            joueur = Joueur.objects.get(id= request.session.get('joueur'))
+        else :
+            joueur = Joueur.objects.get(email=email)
 
         # Récupération de la dernière partie du joueur
         if Partie.objects.filter(idJoueur=joueur).count() > 0:
@@ -138,10 +147,16 @@ def fin(request):
     joueur = Joueur.objects.get(id=request.session.get('joueur'))
     partie = Partie.objects.get(id=request.session.get('partie'))
     AnciennePartie = Partie.objects.get(id=request.session.get('anciennePartie'))
+    verbe = Verbe.objects.get(baseVerbal=request.session.get('verbe'))
+    number = request.session.get('question_index')
+    print("number :", number)
+    print("laaaaaaaaaaaaaaaaa")
     context = {
         'joueur': joueur,
         'partie': partie,
         'anciennePartie': AnciennePartie,
+        'verbe': verbe,
+        'number': number,
     }
     return render(request, 'english_test_app/fin.html', context)
 

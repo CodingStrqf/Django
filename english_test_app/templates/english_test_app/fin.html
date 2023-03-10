@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../../static/english_test_app/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,6 +20,7 @@
             <a href="/deconnexion">Déconnexion</a>
             <br />
             <form method="get" action="jeu" class="center">
+                {% csrf_token %}
                 <table>
                     <tr>
                         <td colspan="3" style="text-align: center">
@@ -27,23 +28,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="text-align: center">Question 10 : Le verbe souffler
-                        </td>
+                        <p style="text-align: center">Question {{number}} : Le verbe {{verb.traduction}} </p>
+                        
                     </tr>
                     <tr>
-                        <td>
-                            blow
-                        </td>
-                        <td>
-                            <span>blown</span>
-                        </td>
-                        <td>
-                            <span>blew</span>
-                        </td>
+                        <p>
+                            {{verbe.baseVerbal}}
+                        </p>
+                        <p>
+                            <p>preterit</p>
+                            <span>{{verbe.preterit}}</span>
+                        </p>
+                        <p>
+                            <p>participePasse</p>
+                            <span>{{verbe.participePasse}} </span>
+                        </p>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            Votre score est de 10
+                            Votre score est de {{number}}
                         </td>
                     </tr>
                     <tr>
