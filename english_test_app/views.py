@@ -78,32 +78,39 @@ def jeu(request):
         # Vérification de la réponse
 
         if json_data['time'] - json.loads(request.session.get('time'))['time'] >= 60 :
-            context = { 'message': "GAGNE", 'question_index': question_index, 'verbe': verbe.baseVerbal }
+            print('time out', verbe.baseVerbal, verbe.preterit, verbe.participePasse)
+
+            context = { 'message': "GAME OVER, Trop de temps", 'question_index': question_index, 'verbe': verbe, 'number': request.session.get('question_index') }
             return render(request, 'english_test_app/fin.html', context=context)
 
         is_correct = (preterit == verbe.preterit and participe_passe == verbe.participePasse)
         #is_correct = True
-        print(is_correct , verbe.baseVerbal, verbe.preterit, verbe.participePasse)
+        #print(is_correct , verbe.baseVerbal, verbe.preterit, verbe.participePasse)
+        #print("reponse ", preterit, participe_passe)
         if is_correct:
             if question_index == 10:
                 # Redirection vers la vue de fin de partie
-                context = { 'message': "GAGNE", 'question_index': question_index, 'verbe': verbe.baseVerbal }
+                context = { 'message': "WIN", 'question_index': question_index, 'verbe': verbe, 'number': request.session.get('question_index') }
                 return render(request, 'english_test_app/fin.html', context=context)
             # Mise à jour de la variable de session pour passer à la question suivante
-            print('correct')
+            #print('correct', verbe.baseVerbal, verbe.preterit, verbe.participePasse)
             question = Question.objects.order_by('?')[0] 
             
             request.session['question_index'] = question_index + 1
             verbe = Verbe.objects.get(baseVerbal=question.idVerbe)
+            #print('correct', verbe.baseVerbal, verbe.preterit, verbe.participePasse)
+            
+            request.session['verbe'] = verbe.baseVerbal
             request.session['time'] = getTime()
 
             message = "Bravo"
         else:
             # Redirection vers la même vue pour afficher la même question
             #return render(request, 'english_test_app/jeu.html',context=)
+            print('incorrect', verbe.baseVerbal, verbe.preterit, verbe.participePasse)
             question = None
             message = "Perdu"
-            context = { 'message': "GAGNE", 'question_index': question_index, 'verbe': verbe, 'number': request.session.get('question_index') }
+            context = { 'message': "GAME OVER", 'question_index': question_index, 'verbe': verbe, 'number': request.session.get('question_index') }
             return render(request, 'english_test_app/fin.html', context=context)
 
     else : 

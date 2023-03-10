@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 
 <head>
@@ -27,11 +28,11 @@
                     <tr>
                         <td>
                             <p>preterit</p>
-                            <input name="preterit_{{ question.id }}" type="text" />
+                            <input name="preterit" type="text" />
                         </td>
                         <td>
                             <p>participe_passe</p>
-                            <input name="participe_passe_{{ question.id }}" type="text" />
+                            <input name="participe_passe" type="text" />
                         </td>
                     </tr>
                 </table>
@@ -43,9 +44,8 @@
             {% endif %}
         </div>
     </div>
-    <footer class="center" id="footer">
-        Blog réalisé par
-    </footer>
+    {% include 'footer.html' %}
+
 </body>
 
 </html>

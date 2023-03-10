@@ -17,18 +17,19 @@
                 90 verbes
             </h1>
             <br />
-            <a href="/deconnexion">Déconnexion</a>
+            {% csrf_token %}
+            <a href="/english_test_app/">Déconnexion</a>
             <br />
             <form method="get" action="jeu" class="center">
                 {% csrf_token %}
                 <table>
                     <tr>
                         <td colspan="3" style="text-align: center">
-                            <h2>GAME OVER</h2>
+                            <h2>{{message}}</h2>
                         </td>
                     </tr>
                     <tr>
-                        <p style="text-align: center">Question {{number}} : Le verbe {{verb.traduction}} </p>
+                        <p style="text-align: center">Question {{number}} : Le verbe {{verbe.traduction}} </p>
                         
                     </tr>
                     <tr>
